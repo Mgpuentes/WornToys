@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="457hw5">
+      <Current>1</Current>
+    </schema>
+    <schema id="3" parent="1" name="6hw"/>
+    <schema id="4" parent="1" name="bucketlist"/>
+    <schema id="5" parent="1" name="dbhw6"/>
+    <schema id="6" parent="1" name="db_hw6"/>
+    <schema id="7" parent="1" name="gems"/>
+    <schema id="8" parent="1" name="hw4"/>
+    <schema id="9" parent="1" name="hw6"/>
+    <schema id="10" parent="1" name="hw6_db"/>
+    <schema id="11" parent="1" name="hww_6"/>
+    <schema id="12" parent="1" name="hw_6"/>
+    <schema id="13" parent="1" name="information_schema"/>
+    <schema id="14" parent="1" name="mydb"/>
+    <schema id="15" parent="1" name="mysql"/>
+    <schema id="16" parent="1" name="performance_schema"/>
+    <schema id="17" parent="1" name="rv"/>
+    <schema id="18" parent="1" name="sakila"/>
+    <schema id="19" parent="1" name="sys"/>
+    <schema id="20" parent="1" name="world"/>
+    <schema id="21" parent="1" name="worntoys">
+      <Visible>1</Visible>
+    </schema>
+    <table id="22" parent="21" name="seller"/>
+    <table id="23" parent="21" name="toy"/>
+    <table id="24" parent="21" name="user"/>
+    <column id="25" parent="22" name="seller_id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="26" parent="22" name="user_id">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="27" parent="22" name="first_name">
+      <Position>3</Position>
+      <DataType>varchar(55)|0</DataType>
+    </column>
+    <column id="28" parent="22" name="last_name">
+      <Position>4</Position>
+      <DataType>varchar(55)|0</DataType>
+    </column>
+    <column id="29" parent="22" name="email">
+      <Position>5</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <index id="30" parent="22" name="user_id">
+      <ColNames>user_id</ColNames>
+    </index>
+    <key id="31" parent="22" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>seller_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="32" parent="22" name="seller_ibfk_1">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>worntoys</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>user_id</RefColNames>
+    </foreign-key>
+    <column id="33" parent="23" name="toy_id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="34" parent="23" name="seller_id">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="35" parent="23" name="name">
+      <Position>3</Position>
+      <DataType>varchar(55)|0</DataType>
+    </column>
+    <column id="36" parent="23" name="list_date">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="37" parent="23" name="toy_image">
+      <Position>5</Position>
+      <DataType>varchar(55)|0</DataType>
+    </column>
+    <index id="38" parent="23" name="seller_id">
+      <ColNames>seller_id</ColNames>
+    </index>
+    <key id="39" parent="23" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>toy_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="40" parent="23" name="toy_ibfk_1">
+      <ColNames>seller_id</ColNames>
+      <RefSchemaName>worntoys</RefSchemaName>
+      <RefTableName>seller</RefTableName>
+      <RefColNames>seller_id</RefColNames>
+    </foreign-key>
+    <column id="41" parent="24" name="user_id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="42" parent="24" name="first_name">
+      <Position>2</Position>
+      <DataType>varchar(55)|0</DataType>
+    </column>
+    <column id="43" parent="24" name="last_name">
+      <Position>3</Position>
+      <DataType>varchar(55)|0</DataType>
+    </column>
+    <column id="44" parent="24" name="email">
+      <Position>4</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="45" parent="24" name="password">
+      <Position>5</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <key id="46" parent="24" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
