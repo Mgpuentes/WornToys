@@ -1,2 +1,2 @@
-static/* linguist-vendored
-.sql diff
+*.pbxproj binary merge=union
+*.rb linguist-language=Python
