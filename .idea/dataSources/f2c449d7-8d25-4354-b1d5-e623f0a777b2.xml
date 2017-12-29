@@ -125,7 +125,11 @@
       <Position>5</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <key id="46" parent="24" name="PRIMARY">
+    <column id="46" parent="24" name="username">
+      <Position>6</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <key id="47" parent="24" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>
