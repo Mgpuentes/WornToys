@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators, BooleanField
 from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
-                               Length, EqualTo)
+                               Length, EqualTo, InputRequired)
 
 app = Flask(__name__)
 app.secret_key = 'IUERHIUEHRG98347%DE$'
@@ -16,11 +16,11 @@ db = SQLAlchemy(app)
 
 
 class LoginForm(FlaskForm):
-    firstName = StringField('First Name', validators=[DataRequired()])
-    lastName = StringField('Last Name', validators=[DataRequired()])
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    firstName = StringField('First Name', validators=[InputRequired()])
+    lastName = StringField('Last Name', validators=[InputRequired()])
+    username = StringField('Username', validators=[InputRequired()])
+    email = StringField('Email', validators=[InputRequired(), Email()])
+    password = PasswordField('Password', validators=[InputRequired()])
 
 
 class User(db.Model):
@@ -74,7 +74,7 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = LoginForm()
-    if request.method == 'POST':
+    if form.validate_on_submit():
         new_user = User(first_name=form.firstName.data, last_name=form.lastName.data,
                         email=form.email.data, password=form.password.data, username=form.username.data)
 
