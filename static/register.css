@@ -1,13 +1,13 @@
 body {
-    background:#333;
+    background:black;
 }
 .form_bg {
-    background-color:#eee;
-    color:#666;
+    background-color:black;
+    color:black;
     padding:20px;
     border-radius:10px;
     position: absolute;
-    border:1px solid #fff;
+    border:1px solid black;
     margin: auto;
     top: 0;
     right: 0;
