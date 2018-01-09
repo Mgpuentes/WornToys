@@ -1,13 +1,21 @@
-from flask import Flask, render_template, request, redirect, jsonify, session, flash
+import os
+from flask import Flask, render_template, request, redirect, jsonify, session, flash, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators, BooleanField, DateField
 from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
                                Length, EqualTo, InputRequired)
+from werkzeug.utils import secure_filename
+from os.path import join, dirname, realpath
+
+UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/uploads/')
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
 
 app = Flask(__name__)
 app.secret_key = 'IUERHIUEHRG98347%DE$'
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # this connects flask to connect to the database
 app.config.from_pyfile('config.cfg')
 
@@ -15,6 +23,7 @@ app.config.from_pyfile('config.cfg')
 db = SQLAlchemy(app)
 
 
+# need to change to RegistrationForm name
 class LoginForm(FlaskForm):
     firstName = StringField('First Name', validators=[InputRequired()])
     lastName = StringField('Last Name', validators=[InputRequired()])
@@ -25,7 +34,6 @@ class LoginForm(FlaskForm):
 
 class ListingForm(FlaskForm):
     name = StringField('Toy Name', validators=[InputRequired()])
-    list_date = DateField('Date', validators=[InputRequired()])
 
 
 class User(db.Model):
@@ -43,6 +51,11 @@ class Toy(db.Model):
     name = db.Column(db.String(55))
     list_date = db.Column(db.DateTime)
     toy_image = db.Column(db.VARCHAR(55))
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route('/')
@@ -117,11 +130,36 @@ def listing():
     return render_template('listing.html', user=user_obj)
 
 
-@app.route('/listing-form/')
+@app.route('/listing-form/', methods=['GET', 'POST'])
 def listingform():
+    print("hello")
     form = ListingForm()
-
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            print("in 1")
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            print("in 2")
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            print("in 3")
+            return redirect(url_for('uploaded_file',
+                                    filename=filename))
     return render_template('listing-form.html', form=form)
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
 
 
 if __name__ == '__main__':
