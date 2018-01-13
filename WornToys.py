@@ -7,6 +7,7 @@ from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
                                Length, EqualTo, InputRequired)
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
+from datetime import datetime
 
 UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/uploads/')
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -138,21 +139,28 @@ def listingform():
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
-            print("in 1")
             return redirect(request.url)
         file = request.files['file']
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
             flash('No selected file')
-            print("in 2")
             return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if file and allowed_file(file.filename) and 'username' in session:
+            user = session['username']
+            print("user from session: {}".format(user))
+            user_obj = User.query.filter_by(username=user).first()
+            print("test: {}".format(user_obj.user_id))
+
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print("in 3")
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
+
+            new_toy = Toy(seller_id=user_obj.user_id, name=form.name.data, list_date=datetime.now(), toy_image=filename)
+            db.session.add(new_toy)
+            db.session.commit()
+
+            print ('upload success')
+            return render_template('listing-form.html', form=form)
     return render_template('listing-form.html', form=form)
 
 

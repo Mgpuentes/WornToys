@@ -89,7 +89,7 @@
       <Position>5</Position>
       <DataType>varchar(55)|0</DataType>
     </column>
-    <index id="38" parent="23" name="seller_id">
+    <index id="38" parent="23" name="toy_ibfk_1">
       <ColNames>seller_id</ColNames>
     </index>
     <key id="39" parent="23" name="PRIMARY">
@@ -100,8 +100,8 @@
     <foreign-key id="40" parent="23" name="toy_ibfk_1">
       <ColNames>seller_id</ColNames>
       <RefSchemaName>worntoys</RefSchemaName>
-      <RefTableName>seller</RefTableName>
-      <RefColNames>seller_id</RefColNames>
+      <RefTableName>user</RefTableName>
+      <RefColNames>user_id</RefColNames>
     </foreign-key>
     <column id="41" parent="24" name="user_id">
       <Position>1</Position>
